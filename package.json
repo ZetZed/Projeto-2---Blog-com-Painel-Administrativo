@@ -1,0 +1,26 @@
+{
+    "name": "projeto-2---blog-com-painel-administrativo",
+    "version": "1.0.0",
+    "description": "Este é meu segundo projeto com Node.js. Criação de um blog do zero, com painel administrativo, sistema de login e editor de texto completo. Nele é utilizado: Express, Express com MYSQL, TinyMCE, Express com HTML e Css, Bootstrap.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ZetZed/Projeto-2---Blog-com-Painel-Administrativo.git"
+    },
+    "author": "Zet Zed",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ZetZed/Projeto-2---Blog-com-Painel-Administrativo/issues"
+    },
+    "homepage": "https://github.com/ZetZed/Projeto-2---Blog-com-Painel-Administrativo#readme",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "ejs": "^3.0.2",
+        "express": "^4.17.1",
+        "mysql2": "^2.1.0",
+        "sequelize": "^5.21.6"
+    }
+}
