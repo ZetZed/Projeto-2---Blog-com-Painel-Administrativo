@@ -2,6 +2,8 @@ const express = require("express");
 const app = express(); //Cria instância do express
 const BodyParser = require("body-parser");
 const connection = require("./database/database");
+const categoriesController = require("./categories/CategoriesController");
+const articlesController = require("./articles/ArticlesController");
 
 //VIEW ENGINE
 app.set('view engine', 'ejs'); //Seleciona a View Engine 'Ejs' , que serve para ler HTML(na pasta view)
@@ -22,11 +24,16 @@ connection
         console.log(error);
     })
 
+
+
 //ROTAS
+app.use("/", categoriesController);
+app.use("/", articlesController);
+
 app.get("/", (req, res) => {
     //res.send("Bem vindo ao meu site"); //Para mandar msg para tela principal, sem usar o HTML...
     res.render("index"); //Para mandar msg que está em HTML no arquivo 'Index.ejs' na pasta views, através do view engine ejs para a tela principal..
-})
+});
 
 //RODAR APLICAÇÃO
 app.listen(8080, () => {
