@@ -2,8 +2,12 @@ const express = require("express");
 const app = express(); //Cria instância do express
 const BodyParser = require("body-parser");
 const connection = require("./database/database");
+
 const categoriesController = require("./categories/CategoriesController");
 const articlesController = require("./articles/ArticlesController");
+
+const Article = require("./articles/Article");
+const Category = require("./categories/Category");
 
 //VIEW ENGINE
 app.set('view engine', 'ejs'); //Seleciona a View Engine 'Ejs' , que serve para ler HTML(na pasta view)
