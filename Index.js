@@ -9,6 +9,7 @@ const articlesController = require("./articles/ArticlesController");
 const Article = require("./articles/Article");
 const Category = require("./categories/Category");
 
+
 //VIEW ENGINE
 app.set('view engine', 'ejs'); //Seleciona a View Engine 'Ejs' , que serve para ler HTML(na pasta view)
 
