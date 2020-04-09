@@ -1,0 +1,59 @@
+<%- include('../../partials/header.ejs') %>
+    <%- include('../../partials/navbar.ejs') %>
+        <div class="container">
+            <hr>
+            <h2>Artigos</h2>
+            <br>
+            <a class="btn btn-success" href="/admin/articles/new">Criar novo Artigo</a>
+            <hr>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Slug</th>
+                        <th>Categoria</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  articles.forEach(articles =>{ %>
+                        <tr>
+                            <td>
+                                <%= articles.id %>
+                            </td>
+                            <td>
+                                <%= articles.title %>
+                            </td>
+                            <td>
+                                <%= articles.slug %>
+                            </td>
+                            <td>
+                                <%= articles.category.title %>
+                            </td>
+                            <td>
+                                <form method="POST" action="/articles/delete" style="display: inline;" onsubmit="confirmarDelecao(event, this)">
+                                    <input type="hidden" name="id" value="<%= articles.id %>">
+                                    <button class="btn btn-danger">Deletar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <%- include('../../partials/footer.ejs') %>
+
+
+            <script>
+                //PARA CONFIRMAR DELETE
+                function confirmarDelecao(event, form) { //(event) = Passa uma ação para função 'confirmarDelecao'......parametro 'form'
+                    event.preventDefault(); // Impede que o formulário seja submetido
+                    var decision = confirm("Você quer deletar este artigo?"); //Pop-up na tela
+                    if (decision) { // Se a decisão de deletar for verdadeira..
+                        form.submit();
+                    } else {
+                        console.log("Não quero deletar, foi um acidente!");
+                    }
+                }
+            </script>

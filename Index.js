@@ -37,8 +37,28 @@ app.use("/", articlesController);
 
 app.get("/", (req, res) => {
     //res.send("Bem vindo ao meu site"); //Para mandar msg para tela principal, sem usar o HTML...
-    res.render("index"); //Para mandar msg que está em HTML no arquivo 'Index.ejs' na pasta views, através do view engine ejs para a tela principal..
+
+    Article.findAll().then(articles => {
+        res.render("index", { articles: articles }); //Para mandar msg que está em HTML no arquivo 'Index.ejs' na pasta views, através do view engine ejs para a tela principal..
+    });
 });
+
+app.get("/:slug", (req, res) => {
+    var slug = req.params.slug;
+    Article.findOne({
+        where: {
+            slug: slug
+        }
+    }).then(article => {
+        if (article != undefined) {
+            res.render("article", { article: article });
+        } else {
+            res.redirect("/");
+        }
+    }).catch(error => {
+        res.redirect("/");
+    });
+})
 
 //RODAR APLICAÇÃO
 app.listen(8080, () => {

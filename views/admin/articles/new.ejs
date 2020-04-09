@@ -1,0 +1,39 @@
+<%- include('../../partials/header.ejs') %>
+    <%- include('../../partials/navbar.ejs') %>
+
+        <div class="container">
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <h2>Novo artigos</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/articles/save">
+                        <input class="form-control" type="text" name="title" placeholder="Defina o título do artigo">
+                        <br>
+                        <textarea class="form-control" placeholder="Escreva o artigo aqui!" name="body" id="article"></textarea>
+                        <label>Categoria</label>
+                        <select name="category" class="form-control">
+                            <% categories.forEach((category) => { %>
+                                <option value="<%= category.id %>"><%= category.title %></option>
+                            <% }) %>
+                        </select>
+                        <br>
+                        <button class="btn btn-success">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <%- include('../../partials/footer.ejs') %>
+
+            <script src="/tinymce/tinymce.min.js"></script>
+            <script>
+                tinymce.init({
+                    language: 'pt_BR', //Define o idioma.. Primeiro precisa baixar a language package no site do TinyMCE e jogar na pasta langs....
+                    selector: "#article", //Define qual textarea que vai add poderes....
+                    plugins: [ // Adiciona plugins no TinyMCE..
+                        'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons' //Para separar plugins é só dar espaço....advlist = plugin de criação de lista; autolink = plugin que quando colar link no texto ele fica azul; link = Pra criar link com botão ; etc,etc....
+                    ]
+                })
+            </script>
