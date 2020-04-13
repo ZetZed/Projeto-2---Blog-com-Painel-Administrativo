@@ -113,7 +113,7 @@ router.get("/articles/page/:num", (req, res) => {
     if (isNaN(page) || page == 1) { //Se página não for numero ou se pagina for igual a 1..
         offset = 0;
     } else {
-        offset = parseInt(page) * 4; //parseInt = converte valor String para valor Int.... * 4 =  multiplica pela quantidade de elementos em cada página(definida em limit: 4)
+        offset = (parseInt(page) - 1) * 4; //parseInt = converte valor String para valor Int.... * 4 =  multiplica pela quantidade de elementos em cada página(definida em limit: 4)
     }
 
     Article.findAndCountAll({
