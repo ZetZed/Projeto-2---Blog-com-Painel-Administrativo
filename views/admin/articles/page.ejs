@@ -1,18 +1,10 @@
-<%- include('partials/header.ejs') %>
-    <%- include('partials/homenavbar.ejs') %>
+<%- include('../../partials/header.ejs') %>
+    <%- include('../../partials/homenavbar.ejs') %>
 
         <body>
             <div class="container">
                 <hr>
-                <div class="jumbotron">
-                    <h1 class="display-4">Bem-vindo(a)</h1>
-                    <p class="lead">Este é um simples blog do Zet Zed.</p>
-                    <hr class="my-4">
-                    <p>Descrição detalhada aqui!.</p>
-                    <a class="btn btn-primary btn-lg" href="#" role="button">Leia Mais</a>
-                </div>
-                <hr>
-                <% articles.forEach(article =>{ %>
+                <% result.articles.rows.forEach(article =>{ %>
                     <div class="card">
                         <div class="card-header">
                             <h2>
@@ -28,4 +20,4 @@
             </div>
         </body>
 
-        <%- include('partials/footer.ejs') %>
+        <%- include('../../partials/footer.ejs') %>

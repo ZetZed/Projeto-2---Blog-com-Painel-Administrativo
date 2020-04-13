@@ -5,26 +5,40 @@
             <br>
             <div class="card">
                 <div class="card-header">
-                    <h2>Novo artigos</h2>
+                    <h2>Editar Artigo</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="/articles/save">
-                        <input class="form-control" type="text" name="title" placeholder="Defina o título do artigo">
+                    <form method="POST" action="/articles/update">
+                        <input type="hidden" name="id" value="<%= articles.id %>">
+                        <input class="form-control" type="text" name="title" placeholder="Defina o título do artigo" value="<%= articles.title %>">
                         <br>
-                        <textarea class="form-control" placeholder="Escreva o artigo aqui!" name="body" id="article"></textarea>
+                        <textarea class="form-control" placeholder="Escreva o artigo aqui!" name="body" id="articles"></textarea>
                         <hr>
                         <label>Categoria</label>
                         <select name="category" class="form-control">
                             <% categories.forEach((category) => { %>
-                                <option value="<%= category.id %>"><%= category.title %></option>
+                                
+                                <% if(category.id == articles.categoryId) { %> 
+                                    <option value="<%= category.id %>" selected><%= category.title %></option>
+                                <% }else{ %>
+                                    <option value="<%= category.id %>"><%= category.title %></option>
+                                <% } %>
                             <% }) %>
                         </select>
                         <br>
-                        <button class="btn btn-success">Cadastrar</button>
+                        <button class="btn btn-success">Atualizar</button>
                     </form>
                 </div>
             </div>
         </div>
+
+        <div id="content" style="display: none;">
+            <%- articles.body %>
+
+        </div>
+
+
+
 
         <%- include('../../partials/footer.ejs') %>
 
@@ -32,9 +46,12 @@
             <script>
                 tinymce.init({
                     language: 'pt_BR', //Define o idioma.. Primeiro precisa baixar a language package no site do TinyMCE e jogar na pasta langs....
-                    selector: "#article", //Define qual textarea que vai add poderes....
+                    selector: "#articles", //Define qual textarea que vai add poderes....
                     plugins: [ // Adiciona plugins no TinyMCE..
                         'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons' //Para separar plugins é só dar espaço....advlist = plugin de criação de lista; autolink = plugin que quando colar link no texto ele fica azul; link = Pra criar link com botão ; etc,etc....
-                    ]
+                    ],
+                    init_instance_callback: () => { //Função que é chamada sempre que editor acaba de ser carregado...
+                        tinymce.get("articles").setContent($("#content").html())
+                    }
                 })
             </script>
