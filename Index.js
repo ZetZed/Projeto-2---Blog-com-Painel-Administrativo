@@ -40,7 +40,8 @@ app.get("/", (req, res) => {
     Article.findAll({
         order: [
             ['id', 'DESC']
-        ]
+        ],
+        limit: 4 //Coloca limite na busca de Artigos
     }).then(articles => {
         Category.findAll().then(categories => {
             res.render("index", { articles: articles, categories: categories }); //Para mandar msg que está em HTML no arquivo 'Index.ejs' na pasta views, através do view engine ejs para a tela principal..

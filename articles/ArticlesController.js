@@ -113,12 +113,15 @@ router.get("/articles/page/:num", (req, res) => {
     if (isNaN(page) || page == 1) { //Se página não for numero ou se pagina for igual a 1..
         offset = 0;
     } else {
-        offset = parseInt(page) * 4; //parseInt = converte valor Int para valor Num.... * 4 =  multiplica pela quantidade de elementos em cada página(definida em limit: 4)
+        offset = parseInt(page) * 4; //parseInt = converte valor String para valor Int.... * 4 =  multiplica pela quantidade de elementos em cada página(definida em limit: 4)
     }
 
     Article.findAndCountAll({
         limit: 4, // Número de elementos que quer mostrar na página...Quantidade de artigos na pagina...
-        offset: offset //Define de qual artigo começar...  offset: 10 = começa a partir do 10º artigo 
+        offset: offset, //Define de qual artigo começar...  offset: 10 = começa a partir do 10º artigo 
+        order: [ //Coloca em ordem pelo id, em ordem decrescente(O mais recente primeiro)
+            ['id', 'DESC']
+        ],
     }).then(articles => { // Vai pesquisar todos os elementos do BD e vai retornar quantidade de elementos que existe na tabela..
 
         //Se existe próxima pagina ou não
@@ -130,6 +133,7 @@ router.get("/articles/page/:num", (req, res) => {
         }
 
         var result = { //var result recebe:
+                page: parseInt(page), //Chega em String e é convertido para Inteiro..
                 next: next,
                 articles: articles
             }
