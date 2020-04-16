@@ -4,7 +4,8 @@
     "description": "Este é meu segundo projeto com Node.js. Criação de um blog do zero, com painel administrativo, sistema de login e editor de texto completo. Nele é utilizado: Express, Express com MYSQL, TinyMCE, Express com HTML e Css, Bootstrap.",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index"
     },
     "repository": {
         "type": "git",
@@ -17,9 +18,11 @@
     },
     "homepage": "https://github.com/ZetZed/Projeto-2---Blog-com-Painel-Administrativo#readme",
     "dependencies": {
+        "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
         "ejs": "^3.0.2",
         "express": "^4.17.1",
+        "express-session": "^1.17.0",
         "mysql2": "^2.1.0",
         "sequelize": "^5.21.6",
         "slugify": "^1.4.0"

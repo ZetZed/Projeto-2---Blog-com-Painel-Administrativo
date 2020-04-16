@@ -1,17 +1,27 @@
 const express = require("express");
 const app = express(); //Cria instância do express
 const BodyParser = require("body-parser");
+const session = require("express-session");
 const connection = require("./database/database");
 
 const categoriesController = require("./categories/CategoriesController");
 const articlesController = require("./articles/ArticlesController");
+const usersController = require("./users/UsersController");
 
 const Article = require("./articles/Article");
 const Category = require("./categories/Category");
-
+const User = require("./users/User");
 
 //VIEW ENGINE
 app.set('view engine', 'ejs'); //Seleciona a View Engine 'Ejs' , que serve para ler HTML(na pasta view)
+
+//SESSIONS
+app.use(session({
+    secret: "podecolocarqualquercoisa", //"" pode usar qualquer palavra..Serve pro express aumentar segurança das sessões
+    cookie: { maxAge: 30000000 } //..cookie expira com o tempo... maxAge define o tempo máximo do cookie, em milisegundos.. 1 segundo = 1000 milisegundos..
+}))
+
+// REDIS - Para salvar Sessões em BD...
 
 //STATIC
 app.use(express.static('public')); //Configuração pro Express aceitar trabalhar com arquivos estáticos (Css, imagem, JS no Front-End), que estarão na pasta 'public'. 
@@ -34,6 +44,11 @@ connection
 //ROTAS
 app.use("/", categoriesController);
 app.use("/", articlesController);
+app.use("/", usersController);
+
+//app.get("/session", (req, res) => {});
+
+//app.get("/leitura", (req, res) {});
 
 app.get("/", (req, res) => {
     //res.send("Bem vindo ao meu site"); //Para mandar msg para tela principal, sem usar o HTML...

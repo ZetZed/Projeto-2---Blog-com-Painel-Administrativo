@@ -3,11 +3,12 @@ const router = express.Router();
 const Category = require("../categories/Category");
 const Article = require("./Article");
 const Slugify = require("slugify");
+const adminAuth = require("../middlewares/adminAuth");
 
 //ROTAS
 
 //ROTA 1 - Cria Rota que Renderiza Front-End 'index.ejs'(em views/admin/articles) passando todos os dados da tabela 'articles' atraves da lista 'articles'..
-router.get("/admin/articles", (req, res) => {
+router.get("/admin/articles", adminAuth, (req, res) => {
     //Busca todos os dados da tabela 'articles' no BD 'guiapress'(incluindo os dados do tipo Category) e passa para lista 'articles'
     Article.findAll({
         include: [{ model: Category }] // Na busca de Articles, inclua os dados do tipo Category..
@@ -18,14 +19,14 @@ router.get("/admin/articles", (req, res) => {
 });
 
 //ROTA 2
-router.get("/admin/articles/new", (req, res) => {
+router.get("/admin/articles/new", adminAuth, (req, res) => {
     Category.findAll().then(categories => { //Para definir qual categoria o post faz parte.... 
         res.render("admin/articles/new", { categories: categories })
     })
 });
 
 //ROTA 3 - Recebe dados dos formulários do Front-End 'new.ejs'(em /view/admin/articles) e salva no BD guiapress( na tabela 'articles')
-router.post("/articles/save", (req, res) => { //Cria Rota
+router.post("/articles/save", adminAuth, (req, res) => { //Cria Rota
     //Chama formulários do Front-End 'new.ejs'(em /view/admin/articles) para variaveis
     var title = req.body.title; // Recebe na variavel title o formulario title do Front-end 'new.ejs'
     var body = req.body.body;
@@ -45,7 +46,7 @@ router.post("/articles/save", (req, res) => { //Cria Rota
 });
 
 //ROTA 4 - BOTÃO DELETAR - Recebe o formulario 'id' do Front-End 'index.ejs' através da variavel 'id', verifica se id está definida, verifica se id é numerico. Passando nesses requisitos, apaga a id da tabela 'articles'(Criada no arquivo 'Articles.js') que seja igual a id (recebido do formulario id através da variavel id) , depois encaminha para a url 'admin/articles'. 
-router.post("/articles/delete", (req, res) => {
+router.post("/articles/delete", adminAuth, (req, res) => {
     var id = req.body.id; // Cria uma variável 'id' que pega o 'id' do 'index.ejs'
     if (id != undefined) {
         if (!isNaN(id)) { // Verifica se 'id' não é número...
@@ -65,7 +66,7 @@ router.post("/articles/delete", (req, res) => {
 });
 
 //ROTA 5 - BOTÃO EDITAR - Recebe do Front-End 'index.ejs'(dentro de /admin/articles) do botão 'Editar', o parametro 'id' através da variavel 'id'. Verifica se id é numero(se não for, reencaminha para admin/articles).Procura na tabela 'articles' por id especifica, depois envia para o front-end 'edit.js'(renderizando este arquivo) através 'article', que recebe através do 'article'
-router.get("/admin/articles/edit/:id", (req, res) => {
+router.get("/admin/articles/edit/:id", adminAuth, (req, res) => {
     var id = req.params.id; //Cria uma variavel id, que pega o id da Rota.
 
     if (isNaN(id)) { //Verifica se id não é numero...
@@ -87,7 +88,7 @@ router.get("/admin/articles/edit/:id", (req, res) => {
 });
 
 //ROTA 6 - BOTÃO ATUALIZAR - Recebe do Front-End 'edit.ejs' o botão "Atualizar"
-router.post("/articles/update", (req, res) => {
+router.post("/articles/update", adminAuth, (req, res) => {
     var id = req.body.id; // Recebe o formulario id na variavel id.
     var title = req.body.title; // Recebe o formulario title na variavel title.
     var body = req.body.body;
@@ -106,7 +107,7 @@ router.post("/articles/update", (req, res) => {
 
 
 //ROTA 7 - PAGINAÇÃO DE ARTIGOS - Escolhe quantidade de artigos numa página...
-router.get("/articles/page/:num", (req, res) => {
+router.get("/articles/page/:num", adminAuth, (req, res) => {
     var page = req.params.num;
     var offset = 0; //offset é 0 para exibir a partir do 1ª elemento(artigo)...
 

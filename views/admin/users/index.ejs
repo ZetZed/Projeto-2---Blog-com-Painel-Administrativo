@@ -1,0 +1,48 @@
+<%- include('../../partials/header.ejs') %>
+    <%- include('../../partials/navbar.ejs') %>
+        <div class="container">
+            <hr>
+            <h2>Usuários</h2>
+            <br>
+            <a class="btn btn-success" href="/admin/users/create">Criar novo Usuário</a>
+            <hr>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user =>{ %>
+                        <tr>
+                            <th>
+                                <%=user.id%>
+                            </th>
+                            <th>
+                                <%= user.name %>
+                            </th>
+                            <th>
+                                <%= user.email %>
+                            </th>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <%- include('../../partials/footer.ejs') %>
+
+
+            <script>
+                //PARA CONFIRMAR DELETE
+                function confirmarDelecao(event, form) { //(event) = Passa uma ação para função 'confirmarDelecao'......parametro 'form'
+                    event.preventDefault(); // Impede que o formulário seja submetido
+                    var decision = confirm("Você quer deletar esta categoria?"); //Pop-up na tela
+                    if (decision) { // Se a decisão de deletar for verdadeira..
+                        form.submit();
+                    } else {
+                        console.log("Não quero deletar, foi um acidente!");
+                    }
+                }
+            </script>
